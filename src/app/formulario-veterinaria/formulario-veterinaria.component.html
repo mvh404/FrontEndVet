@@ -1,0 +1,55 @@
+<div class="container">
+  <h2>Registro de Mascotas</h2>
+  
+  <form>
+    <div class="form-group">
+      <label for="name">Nombre de la Mascota:</label>
+      <input 
+        type="text" 
+        id="name" 
+        class="form-control" 
+        placeholder="Ingresa el nombre de la mascota"
+        [(ngModel)]="nombre" 
+        name="nombre" 
+        required>
+    </div>
+
+    <div class="form-group">
+      <label for="raza">Raza:</label>
+      <input 
+        type="text" 
+        id="raza" 
+        class="form-control" 
+        placeholder="Ingresa la raza"
+        [(ngModel)]="raza" 
+        name="raza" 
+        required>
+    </div>
+
+    <div class="form-group">
+      <label for="edad">Edad:</label>
+      <input 
+        type="number" 
+        id="edad" 
+        class="form-control" 
+        placeholder="Ingresa la edad"
+        [(ngModel)]="edad" 
+        name="edad" 
+        required>
+    </div>
+
+    <button 
+      type="submit" 
+      class="btn btn-primary"
+      [disabled]="!nombre || !raza || !edad">
+      Registrar
+    </button>
+  </form>
+
+  <div class="pet-info" *ngIf="nombre && raza && edad">
+    <h3>Información registrada:</h3>
+    <p><strong>Nombre:</strong> {{ nombre }}</p>
+    <p><strong>Raza:</strong> {{ raza }}</p>
+    <p><strong>Edad:</strong> {{ edad }} años</p>
+  </div>
+</div>
