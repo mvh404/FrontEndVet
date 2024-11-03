@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { FormularioVeterinariaComponent } from "./formulario-veterinaria/formulario-veterinaria.component";
+import { FormularioVeterinariaComponent } from "./formulario-veterinaria/formulario-veterinaria.component.spec";
 
 
 @Component({
