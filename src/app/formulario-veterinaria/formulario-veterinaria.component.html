@@ -68,7 +68,7 @@
     </button>
   </form>
 
-  <!-- Mostrar la tabla solo si hay citas registradas -->
+  
   <table *ngIf="citas.length > 0" class="table">
     <thead>
       <tr>
@@ -79,7 +79,7 @@
         <th>Médico</th>
         <th>Consultorio</th>
       </tr>
-    </thead>
+    </thead> 
     <tbody>
       <tr *ngFor="let cita of citas; let i = index">
         <td>{{ i + 1 }}</td>
