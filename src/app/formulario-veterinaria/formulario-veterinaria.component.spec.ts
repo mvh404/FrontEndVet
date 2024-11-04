@@ -9,29 +9,35 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./formulario-veterinaria.component.css']
 })
 export class FormularioVeterinariaComponent {
-  nombre: string = '';
-  raza: string = '';
-  edad: number | null = null;
+  fecha: string = '';
+  hora: string = '';
+  paciente: string = '';
+  medico: string = '';
+  consultorio: number | null = null;
 
-  // Arreglo para almacenar las mascotas registradas
-  mascotas: { nombre: string; raza: string; edad: number }[] = [];
+  // Arreglo para almacenar las citas registradas
+  citas: { fecha: string; hora: string; paciente: string; medico: string; consultorio: number }[] = [];
 
-  // Método para registrar la mascota y agregarla al arreglo
-  registrarMascota() {
-    if (this.nombre && this.raza && this.edad !== null) {
-      // Agrega la nueva mascota al arreglo
-      this.mascotas.push({
-        nombre: this.nombre,
-        raza: this.raza,
-        edad: this.edad
+  // Método para registrar la cita y agregarla al arreglo
+  registrarCita() {
+    if (this.fecha && this.hora && this.paciente && this.medico && this.consultorio !== null) {
+      // Agrega la nueva cita al arreglo
+      this.citas.push({
+        fecha: this.fecha,
+        hora: this.hora,
+        paciente: this.paciente,
+        medico: this.medico,
+        consultorio: this.consultorio
       });
 
       // Limpia los campos del formulario
-      this.nombre = '';
-      this.raza = '';
-      this.edad = null;
+      this.fecha = '';
+      this.hora = '';
+      this.paciente = '';
+      this.medico = '';
+      this.consultorio = null;
 
-      console.log('Mascota registrada');
+      console.log('Cita registrada');
     }
   }
 }
