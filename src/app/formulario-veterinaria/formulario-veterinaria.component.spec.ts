@@ -21,8 +21,29 @@ export class FormularioVeterinariaComponent {
 
   // Método para registrar la cita y agregarla al arreglo
   registrarCita() {
+    const url = "http://localhost:1234/citas";
     if (this.fecha && this.hora && this.paciente && this.medico && this.consultorio !== null) {
       // Agrega la nueva cita al arreglo
+      fetch(url, {
+        method: "POST",     
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(this.citas)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Error en la solicitud: " + response.status);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log("Respuesta del servidor:", this.citas);  
+    })
+    .catch(error => {
+        console.error("Hubo un problema con el POST:", error);
+    });
+    
       this.citas.push({
         fecha: this.fecha,
         hora: this.hora,
@@ -40,5 +61,7 @@ export class FormularioVeterinariaComponent {
 
       console.log('Cita registrada');
     }
+
+
   }
 }
