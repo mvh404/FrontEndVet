@@ -18,6 +18,7 @@ export class FormularioVeterinariaComponent {
   descripcion: string = '';
 
   citas: { fecha: string; hora: string; paciente: string; medico: string; consultorio: number; descripcion: string }[] = [];
+  router: any;
 
   // Función para validar y formatear la hora
   formatHora(hora: string): string {
@@ -32,6 +33,11 @@ export class FormularioVeterinariaComponent {
       return date.toISOString().substr(11, 8);  // Formato HH:mm:ss
     }
   }
+
+  navegarOtraPagina() {
+    this.router.navigate(['/formulario-personas.component.html']); // Reemplaza '/otra-pagina' con la ruta deseada
+  }
+  
 
   async registrarCita() {
     const url = "http://localhost:1234/citas";
