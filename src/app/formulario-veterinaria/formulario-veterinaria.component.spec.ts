@@ -15,53 +15,81 @@ export class FormularioVeterinariaComponent {
   paciente: string = '';
   medico: string = '';
   consultorio: number | null = null;
+  descripcion: string = '';
 
-  // Arreglo para almacenar las citas registradas
-  citas: { fecha: string; hora: string; paciente: string; medico: string; consultorio: number }[] = [];
+  citas: { fecha: string; hora: string; paciente: string; medico: string; consultorio: number; descripcion: string }[] = [];
 
-  // Método para registrar la cita y agregarla al arreglo
-  registrarCita() {
-    const url = "http://localhost:1234/citas";
-    if (this.fecha && this.hora && this.paciente && this.medico && this.consultorio !== null) {
-      // Agrega la nueva cita al arreglo
-      fetch(url, {
-        method: "POST",     
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(this.citas)
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error("Error en la solicitud: " + response.status);
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log("Respuesta del servidor:", this.citas);  
-    })
-    .catch(error => {
-        console.error("Hubo un problema con el POST:", error);
-    });
-    
-      this.citas.push({
-        fecha: this.fecha,
-        hora: this.hora,
-        paciente: this.paciente,
-        medico: this.medico,
-        consultorio: this.consultorio
-      });
-
-      // Limpia los campos del formulario
-      this.fecha = '';
-      this.hora = '';
-      this.paciente = '';
-      this.medico = '';
-      this.consultorio = null;
-
-      console.log('Cita registrada');
+  // Función para validar y formatear la hora
+  formatHora(hora: string): string {
+    const timePattern = /^([01]?[0-9]|2[0-3]):([0-5]?[0-9]):([0-5]?[0-9])$/;
+    if (timePattern.test(hora)) {
+      return hora;  // Si la hora ya es válida, la devuelve tal cual
+    } else {
+      const date = new Date(`1970-01-01T${hora}:00Z`);
+      if (isNaN(date.getTime())) {
+        throw new Error("Hora no válida");
+      }
+      return date.toISOString().substr(11, 8);  // Formato HH:mm:ss
     }
+  }
 
+  async registrarCita() {
+    const url = "http://localhost:1234/citas";
 
+    if (this.fecha && this.hora && this.paciente && this.medico && this.consultorio !== null && this.descripcion) {
+      try {
+        // Validamos y formateamos la hora antes de enviarla
+        const horaFormateada = this.formatHora(this.hora);
+        
+        const nuevaCita = {
+          fecha: this.fecha,
+          hora: horaFormateada,
+          paciente: this.paciente,
+          medico: this.medico,
+          consultorio: this.consultorio,
+          descripcion: this.descripcion
+        };
+
+        console.log("Enviando cita:", nuevaCita);
+
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            fecha: this.fecha,
+            hora: nuevaCita.hora,
+            paciente_id: this.paciente,     
+            medico_id: this.medico,         
+            consultorio_id: this.consultorio.toString(), 
+            descripcion: this.descripcion   
+          })
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`Error en la solicitud: ${response.status} - ${errorText}`);
+        }
+
+        const data = await response.json();
+        console.log("Respuesta del servidor:", data);
+
+        // Agregar la nueva cita al arreglo de citas
+        this.citas.push(nuevaCita);
+
+        // Limpiar los campos del formulario
+        this.fecha = '';
+        this.hora = '';
+        this.paciente = '';
+        this.medico = '';
+        this.consultorio = null;
+        this.descripcion = ''; // Limpiar la descripción
+
+        console.log('Cita registrada con éxito');
+      } catch (error) {
+        console.error("Hubo un problema con el POST:", error);
+      }
+    }
   }
 }

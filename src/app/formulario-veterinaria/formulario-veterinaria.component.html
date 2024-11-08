@@ -60,15 +60,27 @@
         required>
     </div>
 
+    <!-- Nuevo campo para la descripción -->
+    <div class="form-group">
+      <label for="descripcion">Descripción:</label>
+      <input 
+        type="text" 
+        id="descripcion" 
+        class="form-control" 
+        placeholder="Descripción de la consulta"
+        [(ngModel)]="descripcion" 
+        name="descripcion" 
+        required>
+    </div>
+
     <button 
       type="submit" 
       class="btn btn-primary"
-      [disabled]="!fecha || !hora || !paciente || !medico || consultorio === null">
+      [disabled]="!fecha || !hora || !paciente || !medico || consultorio === null || !descripcion">
       Registrar Cita
     </button>
   </form>
 
-  
   <table *ngIf="citas.length > 0" class="table">
     <thead>
       <tr>
@@ -78,6 +90,7 @@
         <th>Paciente</th>
         <th>Médico</th>
         <th>Consultorio</th>
+        <th>Descripción</th>
       </tr>
     </thead> 
     <tbody>
@@ -88,6 +101,7 @@
         <td>{{ cita.paciente }}</td>
         <td>{{ cita.medico }}</td>
         <td>{{ cita.consultorio }}</td>
+        <td>{{ cita.descripcion }}</td> <!-- Mostrar la descripción -->
       </tr>
     </tbody>
   </table>
