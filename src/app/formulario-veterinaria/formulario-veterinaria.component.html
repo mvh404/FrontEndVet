@@ -1,55 +1,108 @@
 <div class="container">
-  <h2>Registro de Mascotas</h2>
-  
-  <form>
+  <h2>Registro de Citas Médicas</h2>
+
+  <form (ngSubmit)="registrarCita()">
     <div class="form-group">
-      <label for="name">Nombre de la Mascota:</label>
+      <label for="fecha">Fecha:</label>
       <input 
-        type="text" 
-        id="name" 
+        type="date" 
+        id="fecha" 
         class="form-control" 
-        placeholder="Ingresa el nombre de la mascota"
-        [(ngModel)]="nombre" 
-        name="nombre" 
+        [(ngModel)]="fecha" 
+        name="fecha" 
         required>
     </div>
 
     <div class="form-group">
-      <label for="raza">Raza:</label>
+      <label for="hora">Hora:</label>
       <input 
-        type="text" 
-        id="raza" 
+        type="time" 
+        id="hora" 
         class="form-control" 
-        placeholder="Ingresa la raza"
-        [(ngModel)]="raza" 
-        name="raza" 
+        [(ngModel)]="hora" 
+        name="hora" 
         required>
     </div>
 
     <div class="form-group">
-      <label for="edad">Edad:</label>
+      <label for="paciente">Paciente:</label>
+      <input 
+        type="text" 
+        id="paciente" 
+        class="form-control" 
+        placeholder="Ingresa el nombre del paciente"
+        [(ngModel)]="paciente" 
+        name="paciente" 
+        required>
+    </div>
+
+    <div class="form-group">
+      <label for="medico">Médico:</label>
+      <input 
+        type="text" 
+        id="medico" 
+        class="form-control" 
+        placeholder="Ingresa el nombre del médico"
+        [(ngModel)]="medico" 
+        name="medico" 
+        required>
+    </div>
+
+    <div class="form-group">
+      <label for="consultorio">Consultorio:</label>
       <input 
         type="number" 
-        id="edad" 
+        id="consultorio" 
         class="form-control" 
-        placeholder="Ingresa la edad"
-        [(ngModel)]="edad" 
-        name="edad" 
+        placeholder="Número de consultorio"
+        [(ngModel)]="consultorio" 
+        name="consultorio" 
+        required>
+    </div>
+
+    <!-- Nuevo campo para la descripción -->
+    <div class="form-group">
+      <label for="descripcion">Descripción:</label>
+      <input 
+        type="text" 
+        id="descripcion" 
+        class="form-control" 
+        placeholder="Descripción de la consulta"
+        [(ngModel)]="descripcion" 
+        name="descripcion" 
         required>
     </div>
 
     <button 
       type="submit" 
       class="btn btn-primary"
-      [disabled]="!nombre || !raza || !edad">
-      Registrar
+      [disabled]="!fecha || !hora || !paciente || !medico || consultorio === null || !descripcion">
+      Registrar Cita
     </button>
   </form>
 
-  <div class="pet-info" *ngIf="nombre && raza && edad">
-    <h3>Información registrada:</h3>
-    <p><strong>Nombre:</strong> {{ nombre }}</p>
-    <p><strong>Raza:</strong> {{ raza }}</p>
-    <p><strong>Edad:</strong> {{ edad }} años</p>
-  </div>
+  <table *ngIf="citas.length > 0" class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Fecha</th>
+        <th>Hora</th>
+        <th>Paciente</th>
+        <th>Médico</th>
+        <th>Consultorio</th>
+        <th>Descripción</th>
+      </tr>
+    </thead> 
+    <tbody>
+      <tr *ngFor="let cita of citas; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ cita.fecha }}</td>
+        <td>{{ cita.hora }}</td>
+        <td>{{ cita.paciente }}</td>
+        <td>{{ cita.medico }}</td>
+        <td>{{ cita.consultorio }}</td>
+        <td>{{ cita.descripcion }}</td> <!-- Mostrar la descripción -->
+      </tr>
+    </tbody>
+  </table>
 </div>
