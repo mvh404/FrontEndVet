@@ -10,22 +10,21 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./formulario-personas.component.css']
 })
 export class FormularioPersonaComponent {
-  id: string = '';
+
   nombre: string = '';
   apellido: string = '';
   fecha_nacimiento: string = '';
   telefono: string = '';
   email: string = '';
 
-  personas: { id: string; nombre: string; apellido: string; fecha_nacimiento: string; telefono: string; email: string }[] = [];
+  personas: { nombre: string; apellido: string; fecha_nacimiento: string; telefono: string; email: string }[] = [];
 
   async registrarPersona() {
     const url = "http://localhost:1234/persona";
 
-    if (this.id && this.nombre && this.apellido && this.fecha_nacimiento && this.email) {
+    if ( this.nombre && this.apellido && this.fecha_nacimiento && this.email) {
       try {
         const nuevaPersona = {
-          id: this.id,
           nombre: this.nombre,
           apellido: this.apellido,
           fecha_nacimiento: this.fecha_nacimiento,
@@ -55,7 +54,6 @@ export class FormularioPersonaComponent {
         this.personas.push(nuevaPersona);
 
         // Limpiar los campos del formulario
-        this.id = '';
         this.nombre = '';
         this.apellido = '';
         this.fecha_nacimiento = '';

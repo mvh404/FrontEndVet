@@ -19,7 +19,7 @@ export class FormularioVeterinariaComponent {
   descripcion: string = '';
 
   citas: { fecha: string; hora: string; paciente: string; medico: string; consultorio: number; descripcion: string }[] = [];
-  router: any;
+  constructor(private router: Router) {}
 
   // Función para validar y formatear la hora
   formatHora(hora: string): string {
@@ -36,7 +36,7 @@ export class FormularioVeterinariaComponent {
   }
 
   navegarOtraPagina() {
-    this.router.navigate(['/formulario-personas/formulario-personas.component']); // Reemplaza '/otra-pagina' con la ruta deseada
+    this.router.navigate(['/formulario-personas']); // Reemplaza '/otra-pagina' con la ruta deseada
   }
   
 
