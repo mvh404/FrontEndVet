@@ -41,7 +41,7 @@ export class FormularioVeterinariaComponent {
   
 
   async registrarCita() {
-    const url = "http://localhost:1234/citas";
+    const url = "http://ec2-3-141-197-103.us-east-2.compute.amazonaws.com:3000/citas";
 
     if (this.fecha && this.hora && this.paciente && this.medico && this.consultorio !== null && this.descripcion) {
       try {

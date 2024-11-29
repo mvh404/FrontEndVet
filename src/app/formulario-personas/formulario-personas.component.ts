@@ -20,7 +20,7 @@ export class FormularioPersonaComponent {
   personas: { nombre: string; apellido: string; fecha_nacimiento: string; telefono: string; email: string }[] = [];
 
   async registrarPersona() {
-    const url = "http://localhost:1234/persona";
+    const url = "http://ec2-3-141-197-103.us-east-2.compute.amazonaws.com:3000/persona";
 
     if ( this.nombre && this.apellido && this.fecha_nacimiento && this.email) {
       try {
